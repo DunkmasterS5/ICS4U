@@ -4,10 +4,12 @@
 package Nguyen;
 
 /**
+ * This class is where all the inputted information is checked for correctness and where all the getter and setter methods are
  * @author StevenNguyen
  * @date September 21, 2015
  */
-public class ContestantInformation {
+@SuppressWarnings("rawtypes")
+public class ContestantInformation implements Comparable {
 	private String firstName ;
 	private String lastName ;
 	private String streetAddress;
@@ -215,4 +217,36 @@ public class ContestantInformation {
 	public String toString(){
 		return (firstName + " " + lastName + " " + streetAddress + " " + city + " " + province + " " + postalCode + " " + phoneNum + " " + birthDate);
 	}
+	/**
+	 * Searches that have this method will occur here, this method applies to linear searches with contestant information parameters
+	 * @param b
+	 * @return
+	 */
+
+	public boolean equalsIgnoreCase(ContestantInformation b) {
+		if (b.getFirstName().equalsIgnoreCase(this.firstName)&&b.getlastName().equalsIgnoreCase(this.lastName)){
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * Binary searches have this method when the parameters are contestant information
+	 */
+	public int compareTo(Object args) {
+		ContestantInformation f = (ContestantInformation) args ;
+		if (f.getlastName().compareTo(this.lastName)<0)
+			return -1;
+		else if (f.getlastName().compareTo(this.lastName)>0)
+			return 1;		
+		else{
+			if (f.getFirstName().compareTo(this.firstName)<0)		
+				return -1;
+			else if (f.getFirstName().compareTo(this.firstName)>0)
+				return 1;
+			else		
+				return 0;
+		}
+	}
+
+
 }

@@ -4,7 +4,7 @@
 package Nguyen;
 
 /**
- * Full of exceptions
+ * Class Full of exceptions
  * @author StevenNguyen
  *
  */
