@@ -2,6 +2,7 @@ package Nguyen;
 
 import java.util.ArrayList;
 /**
+ * class
  * The class where all the searches are placed/happen
  * @author 322211632
  *

@@ -230,7 +230,7 @@ public class ContestantInformation implements Comparable {
 		return false;
 	}
 	/**
-	 * Binary searches have this method when the parameters are contestant information
+	 * Binary searches have this method when the parameters are pieces of contestant information
 	 */
 	public int compareTo(Object args) {
 		ContestantInformation f = (ContestantInformation) args ;

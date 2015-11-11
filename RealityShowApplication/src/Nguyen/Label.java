@@ -2,6 +2,7 @@ package Nguyen;
 
 
 /**
+ * class
  * Outputs Contestant information in a specific format
  * @author StevenNguyen
  *

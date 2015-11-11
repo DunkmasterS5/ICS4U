@@ -51,12 +51,18 @@ public class ContestantList {
 				clearAll(C1);
 			if (menuselection == 6)
 				saveData(C1);
+			if (menuselection == 7)
+				loadData(C1);
 			if (menuselection == 8)
 				sortData(C1);
 
 		} while (menuselection !=9);
 	}
-
+/**
+ * Contestants input their information then are accepted in after everything is checked and they answer a question
+ * @param C1
+ */
+	
 	public static void addContestant (ArrayList<ContestantInformation> C1){
 		Scanner scan = new Scanner(System.in);
 		boolean flag = false;
@@ -96,7 +102,7 @@ public class ContestantList {
 			try {	   
 
 				/**
-				 * Properly sets (when correct) contestant input values and sets the province value to the enum type Province when correct
+				 * Properly sets (when correct) contestant input values and sets the province value to the enum type Province when found
 				 */
 				ContestantInformation Contestant1 = new ContestantInformation ();
 
@@ -177,7 +183,7 @@ public class ContestantList {
 		else{
 			for (int a=0;a<C1.size();a++){
 				label1 = new Label (C1.get(a));
-				System.out.print (label1.toString()) ;
+				System.out.println (label1.toString()) ;
 			}
 		}
 	}
@@ -199,6 +205,10 @@ public class ContestantList {
 		temp.setlastName(last);
 
 		Searches.linearSearch(C1, temp);
+		if (Searches.linearSearch(C1, temp)==-1)
+			 System.out.print("This person is not in the list.");
+		else 
+			System.out.print("This person is in the list.");
 	}
 
 	/**
@@ -206,7 +216,7 @@ public class ContestantList {
 	 * @param C1
 	 */
 	public static void remove (ArrayList<ContestantInformation> C1){
-		System.out.println("Enter thr number of the contestant you wish to remove.");
+		System.out.println("Enter the number of the contestant you wish to remove.");
 		int select = scan.nextInt();
 		C1.remove(select);
 	}
@@ -220,7 +230,7 @@ public class ContestantList {
 	}
 
 	/**
-	 * Saves information into a file
+	 * Saves contestants and their information into a file
 	 * @param C1
 	 */
 	public static void saveData (ArrayList<ContestantInformation> C1) { 	
@@ -228,7 +238,8 @@ public class ContestantList {
 		try {
 			fileOutputStream = new FileOutputStream("src\\Nguyen\\contestants.txt");
 			PrintStream fps = new PrintStream(fileOutputStream);
-			for (int i=0;i<C1.size();i++){						
+			for (int i=0;i<C1.size();i++){
+				fps.println(C1.size());
 				fps.println(C1.get(i).getFirstName());
 				fps.println(C1.get(i).getlastName());
 				fps.println(C1.get(i).getstreetAddress());
@@ -253,14 +264,39 @@ public class ContestantList {
 	/**
 	 * Loads information from the file
 	 * @param C1
+	 * @throws InvalidInputException 
 	 */
-	public static void loadData (ArrayList<ContestantInformation> C1){
+	public static void loadData (ArrayList<ContestantInformation> C1) throws InvalidInputException{
 		BufferedReader fbr;
-
 		try {
-			fbr = new BufferedReader(new FileReader("contestants.txt"));
-			for (int i=0;i<C1.size();i++){
-				String load = fbr.readLine();																				
+			fbr = new BufferedReader(new FileReader("src\\Nguyen\\contestants.txt"));
+			String load = fbr.readLine();
+			int x = Integer.parseInt(load);
+			for (int i=0;i<x;i++){
+				
+				String firstName = fbr.readLine();
+				String lastName = fbr.readLine();
+				String streetAddress = fbr.readLine();
+				String city = fbr.readLine();
+				String province = fbr.readLine();
+				String postalCode = fbr.readLine();
+				String phoneNumber = fbr.readLine();
+				String birthDate = fbr.readLine();
+				//make new ContestantInformation
+				//add ContestantInformation to the ArrayList
+				
+				
+				ContestantInformation loaded = new ContestantInformation();
+				C1.add(loaded);
+				
+				loaded.setFirstName(firstName);
+				loaded.setlastName(lastName);
+				loaded.setstreetAddress(streetAddress);
+				loaded.setcity(city);
+				loaded.setprovince(checkProvince(province));
+				loaded.setpostalCode(postalCode);
+				loaded.setphoneNum(phoneNumber);
+				loaded.setbirthDate(birthDate);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();			
@@ -270,6 +306,48 @@ public class ContestantList {
 		}
 	}
 	
+	
+	/**
+	 * Similar to the add contestant method when a contestant is loaded the method will check the province and return it in the Province enum type
+	 * @param province
+	 * @return Province
+	 */
+	public static Province checkProvince (String province){
+		
+		if (province.equalsIgnoreCase("Ontario")||province.equalsIgnoreCase("ON"))
+			return Province.ON;
+		else if (province.equalsIgnoreCase("yukon territories")||province.equalsIgnoreCase("Yukon")||province.equalsIgnoreCase("YT"))
+			return Province.YT;
+		else if (province.equalsIgnoreCase("Quebec")||province.equalsIgnoreCase("QC"))
+			return Province.QC;
+		else if (province.equalsIgnoreCase("Saskatchewan")||province.equalsIgnoreCase("SK"))
+			return Province.SK;
+		else if (province.equalsIgnoreCase("Nova Scotia")||province.equalsIgnoreCase("NS"))
+			return (Province.NS);
+		else if (province.equalsIgnoreCase("Nunavut")||province.equalsIgnoreCase("NU"))
+			return (Province.NU);
+		else if (province.equalsIgnoreCase("Northwest territories")||province.equalsIgnoreCase("Northwest")||province.equalsIgnoreCase("NT"))
+			return (Province.NT);
+		else if (province.equalsIgnoreCase("Manitoba")||province.equalsIgnoreCase("MB"))
+			return (Province.MB);
+		else if (province.equalsIgnoreCase("British columbia")||province.equalsIgnoreCase("BC"))
+			return (Province.BC);
+		else if (province.equalsIgnoreCase("Alberta")||province.equalsIgnoreCase("AB"))
+			return (Province.AB);
+		else if (province.equalsIgnoreCase("Prince Edward Island")||province.equalsIgnoreCase("PEI"))
+			return (Province.PEI);
+		else if (province.equalsIgnoreCase("Newfoundland and Labrador")||province.equalsIgnoreCase("NL"))
+			return (Province.NL);
+		else if (province.equalsIgnoreCase("New brunswick")||province.equalsIgnoreCase("NB"))
+			return (Province.NB);
+		return (Province.ON) ;
+	}
+	
+	
+	/**
+	 * Sorts the list of contestants
+	 * @param C1
+	 */
 	@SuppressWarnings("unchecked")
 	public static void sortData (ArrayList<ContestantInformation> C1){
 		Collections.sort(C1);
