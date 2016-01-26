@@ -194,7 +194,6 @@ public class ContestantList {
 	 * @throws InvalidInputException
 	 */
 	public static void searchTerms (ArrayList<ContestantInformation> C1) throws InvalidInputException{
-		String terms=scan.nextLine();
 		System.out.println("Enter the last name of the person you wish to find.");
 		String first = scan.nextLine();
 		System.out.println("Enter the first name of the person you wish to find.");
